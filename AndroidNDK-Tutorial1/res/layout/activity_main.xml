@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity" >
+
+    <EditText
+        android:id="@+id/originalET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/setTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/originalET"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="Set Text" />
+
+    <TextView
+        android:id="@+id/originalTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/originalET"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="18dp"
+        android:text="Исходный текст:" />
+
+    <Button
+        android:id="@+id/changeTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setTextButton"
+        android:layout_centerHorizontal="true"
+        android:text="Change Text" />
+
+    <Button
+        android:id="@+id/getTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/setTextButton"
+        android:layout_below="@+id/changeTextButton"
+        android:text="Get Text" />
+
+    <EditText
+        android:id="@+id/afterChangeET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/afterChangeTV"
+        android:layout_below="@+id/afterChangeTV"
+        android:layout_marginTop="37dp"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/afterChangeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/originalET"
+        android:layout_below="@+id/getTextButton"
+        android:layout_marginTop="40dp"
+        android:text="Текст после изменения в native" />
+
+</RelativeLayout>
