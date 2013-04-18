@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements NativeCalls {
 	static {
-		System.loadLibrary("AndroidNDK");
+		System.loadLibrary("AndroidNDK"); 
 	}
 	//загрузка ресурсов
 	native public void loadAudio(NativeCalls nativeCallListener, AssetManager mng);
