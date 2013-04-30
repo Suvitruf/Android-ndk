@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
+#include "OALContext.h"
 //struct timeval currentTime;
 //struct timeval oldTime;
 
@@ -85,18 +86,15 @@ void NativeCallListener::clean(){
 
 
 void NativeCallListener:: load(){
-
 	oalContext = new OALContext();
-	sound = new OALOgg();
-	//sound = new OALWav();
-	//LOGI("load");
-	char *  fileName = new char[64];
-	//strcpy(fileName, "audio/industrial_suspense1.wav");
-	strcpy(fileName, "audio/Katatonia - Deadhouse_(piano version).ogg");
-	//strcpy(fileName, "audio/industrial_suspense1.wav");
+	//sound = new OALOgg();
+	sound = new OALWav(true);
 
+	char *  fileName = new char[64];
+	//strcpy(fileName, "audio/SnowflakePickUpV_3.wav");
+	strcpy(fileName, "audio/Katatonia - Deadhouse_(piano version).wav");
+	//strcpy(fileName, "audio/industrial_suspense1.wav");
 	sound->load(mgr,fileName);
-	//LOGI("load end");
 	/*
 	BasicWAVEHeader header;
 	char* data = readWAV(mgr, fileName,&header);
@@ -105,7 +103,6 @@ void NativeCallListener:: load(){
 }
 void NativeCallListener::loadAudio(){
 	//init();
-
 	load();
 
 	sendLog(getJniEnv()->NewStringUTF("load complete!"));
@@ -133,16 +130,16 @@ void NativeCallListener::sendLog(jobject log) {
 }
 
 
-JNIEXPORT void JNICALL Java_ru_suvitruf_androidndk_tutorial4_MainActivity_loadAudio(JNIEnv *pEnv, jobject pThis, jobject pNativeCallListener, jobject assetManager) {
+JNIEXPORT void JNICALL Java_ru_suvitruf_androidndk_openal_MainActivity_loadAudio(JNIEnv *pEnv, jobject pThis, jobject pNativeCallListener, jobject assetManager) {
 
 	listener = NativeCallListener(pEnv, pNativeCallListener);
 	mgr = AAssetManager_fromJava(pEnv, assetManager);
 	listener.loadAudio();
 }
 
-JNIEXPORT void JNICALL Java_ru_suvitruf_androidndk_tutorial4_MainActivity_destroyObjects(JNIEnv *pEnv, jobject pThis){
+JNIEXPORT void JNICALL Java_ru_suvitruf_androidndk_openal_MainActivity_destroyObjects(JNIEnv *pEnv, jobject pThis){
 	listener.destroy();
 }
-JNIEXPORT void JNICALL Java_ru_suvitruf_androidndk_tutorial4_MainActivity_play(JNIEnv *pEnv, jobject pThis){
+JNIEXPORT void JNICALL Java_ru_suvitruf_androidndk_openal_MainActivity_play(JNIEnv *pEnv, jobject pThis){
 	play();
 }

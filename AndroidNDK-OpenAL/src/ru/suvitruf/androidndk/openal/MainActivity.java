@@ -1,6 +1,6 @@
-package ru.suvitruf.androidndk.tutorial4;
+package ru.suvitruf.androidndk.openal;
 
-import ru.suvitruf.androidndk.tutorial4.R;
+import ru.suvitruf.androidndk.openal.R;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,20 +16,20 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements NativeCalls {
 	static {
-		System.loadLibrary("AndroidNDK");   
+		System.loadLibrary("AndroidNDK");  
 	}
 	//загрузка ресурсов
 	native public void loadAudio(NativeCalls nativeCallListener, AssetManager mng);
-	//очистка 
+	//очистка
 	native public void destroyObjects();
-	//играем WAV 
-	native public void play();
+	//играем WAV
+	native public void play(); 
 	protected Handler handler = new Handler()
     {  
     	 @Override
          public void handleMessage(Message msg) {
     		 showResult(msg.getData().getString("result"));   		 
-    	 } 
+    	 }
     };
 	
     

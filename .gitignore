@@ -19,3 +19,7 @@ local.properties
 .classpath
 .project
 .metadata
+
+#some audio assets
+AndroidNDK-OpenAL/assets/audio/
+AndroidNDK-Tutorial4/assets/audio/
