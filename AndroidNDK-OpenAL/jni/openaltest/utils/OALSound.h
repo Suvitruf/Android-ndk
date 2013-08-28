@@ -1,7 +1,7 @@
+// OALSound.h
 #ifndef _OALSound_
 #define _OALSound_
-// OALSound.h
-// Обёртка для работы со звуковыми файлами
+
 
 #include <al.h>
 #include <alc.h>
@@ -9,7 +9,7 @@
 #include "trace.h"
 #include "AAssetFile.h"
 
-#define BUFFER_SIZE 4096*8
+#define BUFFER_SIZE 4096
 #define BUFF_COUNT 4
 class OALSound
 {
@@ -18,6 +18,7 @@ class OALSound
 public:
 	OALSound();
 	OALSound(bool streaming);
+	//OALSound(AAssetManager *mgr, const char * fileName, bool streaming);
 	virtual ~OALSound();
 
 
@@ -49,16 +50,19 @@ public:
     virtual float getOffset();
     virtual void load(AAssetManager *mgr, const char* filename)= 0;
 protected:
+
     bool streaming;
     ALuint source;
     //ALuint sources[BUFF_COUNT];
-    const char * filename;
+    //const char * filename;
 
-    ALuint   buffer;
+    //ALuint   buffer;
     ALuint   buffers[BUFF_COUNT];
     ALenum format;
     //unsigned  char * data;
     unsigned char * buf;
+    //unsigned char * bufs[BUFF_COUNT];
+    AAssetFile * f;
     //char * datas[BUFF_COUNT];
 private:
 
@@ -74,11 +78,5 @@ private:
 unsigned int Min( unsigned int agr1,  unsigned int agr2);
 
 
-
-
-
-
-
 #endif
-//#include "OALWav.h"
-//#include "OALOgg.h"
+

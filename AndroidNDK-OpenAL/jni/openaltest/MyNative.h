@@ -5,7 +5,7 @@
 #include "OALOgg.h"
 #include "OALWav.h"
 
-char  MyStr[80];
+//char  MyStr[80];
 
 
 extern "C" {
@@ -24,30 +24,32 @@ public:
 	NativeCallListener() {}
 	//апуск таймера
 
-	//передать значение в Java метод
+	//send value to Java
     void sendLog(jobject log);
-    //очистка всех ресурсов
+    //cleaning resources
     void destroy();
-	~NativeCallListener(){
 
+	~NativeCallListener(){
+		destroy();
 	}
+
+	//loading audio
 	void loadAudio();
 	//void play();
 	//void playOGG();
-	ALCdevice* device;
-	ALCcontext* context;
+	//ALCdevice* device;
+	//ALCcontext* context;
 private:
 	JNIEnv* getJniEnv();
 
-    //ссылка на метод
+
 	jmethodID sendLogID;
-	//ссылка на объект
 	jobject mObjectRef;
 	JavaVM* mJVM;
 
 
-	ALuint soundWAV;
-	ALuint soundOGG;
+	//ALuint soundWAV;
+	//ALuint soundOGG;
 	void load();
 	void clean();
 

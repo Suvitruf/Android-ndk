@@ -34,17 +34,17 @@ NativeCallListener::NativeCallListener(JNIEnv* pJniEnv, jobject pWrappedInstance
 }*/
 void play(){
 	if(sound->isPlaying())
-		sound->pause();
+		sound->stop();
 	else
 		sound->play();
 	//sound->setVolume(1.0);
 	/*
-	// создаём сорс из буфера
+
 	 ALuint source = 0;
 	 alGenSources(1, &source );
 	 alSourcei(source, AL_BUFFER,soundWAV);
 
-	 // играем
+
 	 alSourcePlay(source);
 
 	 int sourceState = AL_PLAYING;
@@ -52,14 +52,13 @@ void play(){
 		 alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
 	 } while(sourceState == AL_PLAYING);
 
-	 // очищаем
+
 	 alDeleteSources(1, &source);
 
 	*/
 	 //sendLog(getJniEnv()->NewStringUTF("playing complete"));
 }
 void NativeCallListener::clean(){
-	//подчищаем за собйо всё
 	delete oalContext;
 	delete sound;
 	/*alDeleteBuffers(1, &soundWAV);
@@ -87,14 +86,18 @@ void NativeCallListener::clean(){
 
 void NativeCallListener:: load(){
 	oalContext = new OALContext();
-	//sound = new OALOgg();
-	sound = new OALWav(true);
+	//sound = new OALOgg(false);
+	//sound = new OALWav(true);
+	//sound = new OALWav(mgr,"audio/industrial_suspense1.wav", false);
+	sound = new OALWav(mgr,"audio/industrial_suspense1.wav", true);
+	//sound = new OALOgg(mgr, "audio/Katatonia - Deadhouse_(piano version).ogg", true);
+	//sound = new OALOgg(mgr, "audio/Katatonia - Deadhouse_(piano version).ogg", false);
+	//char *  fileName = new char[64];
 
-	char *  fileName = new char[64];
 	//strcpy(fileName, "audio/SnowflakePickUpV_3.wav");
-	strcpy(fileName, "audio/Katatonia - Deadhouse_(piano version).wav");
+	//strcpy(fileName, "audio/Katatonia - Deadhouse_(piano version).ogg");
 	//strcpy(fileName, "audio/industrial_suspense1.wav");
-	sound->load(mgr,fileName);
+	//sound->load(mgr,fileName);
 	/*
 	BasicWAVEHeader header;
 	char* data = readWAV(mgr, fileName,&header);

@@ -7,9 +7,14 @@ OALWav::OALWav():OALSound()
 OALWav::OALWav(bool streaming):OALSound(streaming){
 
 }
+
+OALWav::OALWav(AAssetManager *mgr, char * fileName, bool streaming):OALSound(streaming){
+	load(mgr,fileName);
+}
+
 OALWav::~OALWav()
 {
-	f.close();
+	f->close();
 }
 //int i=0;
 
@@ -34,21 +39,21 @@ void OALWav::play()
 {
 
 
-	//если не стримим
+
 	if(!streaming){
 
-		//один сорс, один буфер...просто играем
+
 		alSourcePlay(source);
 		//int sourceState = AL_PLAYING;
 		 do {
 			 //alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
 		 } while(isPlaying());//while(sourceState == AL_PLAYING);
 	}
-	//если всё же стримим
+
 	else{
 		//pid = fork();
 
-		//начинаем играть
+
 		alSourcePlay(source);
 		/*int sourceState = AL_PLAYING;
 		do {
@@ -59,26 +64,26 @@ void OALWav::play()
 
 		//LOGI("-11");
 		//return;
-		//если ещё не весь файл прочитали
+
 		while(curPos<header.dataSize){
 			ALint val;
 			ALuint buffer;
-			//проверяем, какие буферы уже отыграли
+
 			alGetSourcei(source, AL_BUFFERS_PROCESSED, &val);
 			if(val <= 0)
 				continue;
-			 //для каждого проигранного буфера
+
 			 while(val--){
-				 //размер данных для чтения
+
 				 int size = Min(BUFFER_SIZE, header.dataSize -curPos);
-			     //читаем новые чанки
+
 				 unsigned  char * data = readRiffs(size);
 
-			     //дропаем из очереди отыгравший буфер
+
 				 alSourceUnqueueBuffers(source, 1, &buffer);
-				 //создаём его по новой с новыми чанками
+
 				 alBufferData(buffer, format, data, size, header.samplesPerSec);
-				 //ставиv в очередь к источнику source буферы
+
 			     alSourceQueueBuffers(source, 1, &buffer);
 
 			     if(alGetError() != AL_NO_ERROR) {
@@ -146,14 +151,11 @@ unsigned char* OALWav::readRiffs(int size){
 	//char* buffer = 0;
 	if(/*curPos>=header.dataSize*/curPos>=header.dataSize) {
 
-		f.close();
+		f->close();
 		return 0;
 	}
-	LOGI("curPos = %i",curPos);
+	//LOGI("curPos = %i",curPos);
 	//if (!(
-				// Заголовки должны быть валидны.
-				// Проблема в том, что не всегда так.
-				// Многие конвертеры недобросовестные пихают в эти заголовки свои логотипы =/
 	//			memcmp("RIFF",header.riff,4) ||
 	//			memcmp("WAVE",header.wave,4) ||
 	//			memcmp("fmt ",header.fmt,4)  ||
@@ -167,11 +169,9 @@ unsigned char* OALWav::readRiffs(int size){
 				//LOGI("this->riffSize*count %i",this->riffSize*count);
 				if (buf){
 					//LOGI("header.samplesPerSec = %i",header.bitsPerSample);
-					int r = f.read(buf,size,1);
+					int r = f->read(buf,size,1);
 					//LOGI("header.samplesPerSec = %i",header.bitsPerSample);
 					if(r){
-						//LOGI("r = %i",r);
-						//curPos+=r;
 						curPos +=r;
 						return buf;
 					}
@@ -179,29 +179,26 @@ unsigned char* OALWav::readRiffs(int size){
 
 				}
 			}
-	f.close();
+	f->close();
 	return 0;
 }
 unsigned char* OALWav::readWAVFull(AAssetManager *mgr, BasicWAVEHeader* header){
 	//unsigned char* buffer = 0;
 
 	//AAssetFile
-	f = AAssetFile(mgr, filename);
+	//f = AAssetFile(mgr, filename);
 
-	if (f.null()) {
-		LOGE("no file %s in readWAV",filename);
+	if (f->null()) {
+		LOGE("no file");
 		return 0;
 	}
 
 
-	int res = f.read(header,sizeof(BasicWAVEHeader),1);
+	int res = f->read(header,sizeof(BasicWAVEHeader),1);
 	//LOGI("read %i bytes from %s", res,filename );
 	if(res){
 		//LOGI("AAsset_read %s,",filename);
 		//if (!(
-			// Заголовки должны быть валидны.
-			// Проблема в том, что не всегда так.
-			// Многие конвертеры недобросовестные пихают в эти заголовки свои логотипы =/
 		//	memcmp("RIFF",header->riff,4) ||
 		//	memcmp("WAVE",header->wave,4) ||
 		//	memcmp("fmt ",header->fmt,4)  ||
@@ -212,15 +209,15 @@ unsigned char* OALWav::readWAVFull(AAssetManager *mgr, BasicWAVEHeader* header){
 			//LOGI("data size = %u", header->dataSize);
 			buf = (unsigned char*)malloc(header->dataSize);
 			if (buf){
-				if(f.read(buf,header->dataSize,1)){
-					f.close();
+				if(f->read(buf,header->dataSize,1)){
+					f->close();
 					return buf;
 				}
 				free(buf);
 			}
 		}
 	}
-	f.close();
+	f->close();
 	return 0;
 }
 
@@ -257,8 +254,10 @@ void  OALWav::createBufferFromWave(unsigned char* data, int size, int index){
 }
 void OALWav:: createBufferFromWave(unsigned char* data){
 	//if(!streaming){
-		alGenBuffers(1,&buffer);
-		alBufferData(buffer,format,data,header.dataSize,header.samplesPerSec);
+	//alGenBuffers(1,&buffer);
+	//alBufferData(buffer,format,data,header.dataSize,header.samplesPerSec);
+	alGenBuffers(1,&buffers[0]);
+	alBufferData(buffers[0],format,data,header.dataSize,header.samplesPerSec);
 	//}
 	/*else{
 		alGenBuffers(1,&buffers[currentBuff]);
@@ -275,7 +274,8 @@ void OALWav::GenSources(){
 	if(!streaming){
 		source = 0;
 		alGenSources(1, &source);
-		alSourcei(source, AL_BUFFER, buffer);
+		//alSourcei(source, AL_BUFFER, buffer);
+		alSourcei(source, AL_BUFFER, buffers[0]);
 	}
 	/*else{
 		sources[currentBuff] = 0;
@@ -290,96 +290,102 @@ void OALWav::LogHeaders(){
 	LOGI("bytesPerSec = %i ",header.bytesPerSec);
 	LOGI("samplesPerSec = %i ",header.samplesPerSec);
 	LOGI("fmtSize = %i ",header.fmtSize);
-	//LOGI("riffSize = %i ",	this->riffSize);
+	LOGI("riffSize = %i ",	header.riffSize);
 	LOGI("channels = %i ",	header.channels);
 }
 
+void OALWav::loadWithStreaming(){
+	this->curPos = 0;
+	//f = AAssetFile(mgr, filename);
+
+	if (f->null()) {
+		LOGE("no file");
+		return;
+	}
+
+	int res = f->read(&header,sizeof(BasicWAVEHeader),1);
+
+	getFormat();
+
+
+	//this->riffCount = (header.dataSize/(header.bitsPerSample/8));
+	//this->riffSize = header.dataSize / this->riffCount;
+
+
+	//this->riffSize = (header.bitsPerSample/8)*header.channels;
+	/*int count = Min(RIFF_COUNT, this->riffCount -curPos);
+	this->datas[currentBuff] = readRiffs(count );
+
+	if(!this->datas[currentBuff])
+		return;
+
+	createBufferFromWave(datas[currentBuff],this->riffSize*(count ), 0);
+	GenSources();*/
+	//LogHeaders();
+	source = 0;
+
+
+	alGenBuffers(BUFF_COUNT, buffers);
+	alGenSources(1, &source);
+	buf = (unsigned char *)malloc(BUFFER_SIZE);
+/*
+	LOGI("source %i",source);
+	for(int i=0;i<BUFF_COUNT;++i)
+		LOGI("buf [%i] = %i",i,buffers[i]);*/
+
+	if(alGetError() != AL_NO_ERROR){
+		LOGI("Error generating :(\n");
+		return;
+	}
+
+
+	for(int i=0;i<BUFF_COUNT;++i)
+		creatBuffer(i);
+
+	if(alGetError() != AL_NO_ERROR) {
+	  LOGI("Error loading :(\n");
+	  return ;
+	}
+
+
+
+	alSourceQueueBuffers(source, BUFF_COUNT, buffers);
+	if(alGetError() != AL_NO_ERROR) {
+		  LOGI("Error alSourceQueueBuffers :(\n");
+		  return;
+	}
+
+
+	/*int count = Min(BUFFER_SIZE, this->riffCount -curPos);
+	this->datas[currentBuff] = readRiffs(count );
+
+	if(!this->datas[currentBuff])
+		return;
+
+	createBufferFromWave(datas[currentBuff],this->riffSize*(count ), 0);
+	GenSources();*/
+}
+void OALWav::loadWithoutStreaming(){
+	unsigned  char * data = this->readWAVFull(f->getManager(), &header);
+
+	getFormat();
+	createBufferFromWave(data);
+	GenSources();
+}
 void OALWav::load(AAssetManager *mgr, const char* filename){
 	//this->mgr = mgr;
 	//currentBuff = 0;
-	this->filename = filename;
+	//this->filename = filename;
+	f = new AAssetFile(mgr, filename);
 	this->buf = 0;
-	if(!streaming){
-		unsigned  char * data = this->readWAVFull(mgr, &header);
-
-		getFormat();
-		createBufferFromWave(data);
-		GenSources();
-		//LOGI("source %i",source);
-	}
-	else{
-		this->curPos = 0;
-		f = AAssetFile(mgr, filename);
-
-		if (f.null()) {
-			LOGE("no file %s in readWAV",filename);
-			return;
-		}
-		//LOGI("1");
-		int res = f.read(&header,sizeof(BasicWAVEHeader),1);
-		//LOGI("2");
-		getFormat();
-		//LOGI("3");
-
-		//this->riffCount = (header.dataSize/(header.bitsPerSample/8));
-		//this->riffSize = header.dataSize / this->riffCount;
+	if(!streaming)
+		loadWithoutStreaming();
+	else
+		loadWithStreaming();
 
 
-		//this->riffSize = (header.bitsPerSample/8)*header.channels;
-		/*int count = Min(RIFF_COUNT, this->riffCount -curPos);
-		this->datas[currentBuff] = readRiffs(count );
 
-		if(!this->datas[currentBuff])
-			return;
-
-		createBufferFromWave(datas[currentBuff],this->riffSize*(count ), 0);
-		GenSources();*/
-		//LogHeaders();
-		source = 0;
-
-		//создаём сорс и буферы
-		alGenBuffers(BUFF_COUNT, buffers);
-		alGenSources(1, &source);
-		buf = (unsigned char *)malloc(BUFFER_SIZE);
-/*
-		LOGI("source %i",source);
-		for(int i=0;i<BUFF_COUNT;++i)
-			LOGI("buf [%i] = %i",i,buffers[i]);*/
-
-		if(alGetError() != AL_NO_ERROR){
-			LOGI("Error generating :(\n");
-		    return;
-		}
-
-		//создаём буферы
-		for(int i=0;i<BUFF_COUNT;++i)
-			creatBuffer(i);
-
-		if(alGetError() != AL_NO_ERROR) {
-		  LOGI("Error loading :(\n");
-		  return ;
-		}
-
-
-		//ставиv в очередь к источнику source буферы
-		alSourceQueueBuffers(source, BUFF_COUNT, buffers);
-		if(alGetError() != AL_NO_ERROR) {
-			  LOGI("Error alSourceQueueBuffers :(\n");
-			  return;
-		}
-
-
-		/*int count = Min(BUFFER_SIZE, this->riffCount -curPos);
-		this->datas[currentBuff] = readRiffs(count );
-
-		if(!this->datas[currentBuff])
-			return;
-
-		createBufferFromWave(datas[currentBuff],this->riffSize*(count ), 0);
-		GenSources();*/
-	}
-
-
+	this->LogHeaders();
 
 }
 

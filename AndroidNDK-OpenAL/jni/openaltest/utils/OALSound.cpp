@@ -5,18 +5,26 @@ unsigned int Min( unsigned int agr1,  unsigned int agr2){
 	return (agr1 <agr2) ?agr1 : agr2;
 }
 
-OALSound::OALSound()
-{
+OALSound::OALSound(){
 	this->streaming = false;
 }
+/*OALSound::OALSound(AAssetManager *mgr, const char * fileName, bool streaming){
+	this->streaming = false;
+
+}*/
 OALSound::OALSound(bool streaming){
 	this->streaming = streaming;
 }
+
 OALSound::~OALSound()
 {
 	if (source) alDeleteSources(1, &source);
 	alDeleteBuffers(BUFF_COUNT, buffers);
-	free(buf);
+	if(buf != NULL) free(buf);
+	/*for(int i=0;i<BUFF_COUNT;++i)
+		if(bufs[i] != NULL) free(bufs[i]);*/
+
+	if(f != NULL) delete f;
 	//delete buffer;
 	//delete buffer;
 	//checkError();
@@ -147,7 +155,7 @@ void OALSound::rewind()
 
 void OALSound::stop()
 {
-
+	LOGI("stoped");
 	alSourceStop(source);
 
 
@@ -157,7 +165,10 @@ void OALSound::stop()
 int OALSound::state()
 {
 	int state;
+	//if(!streaming)
 	alGetSourcei(source, AL_SOURCE_STATE, &state);
+	//else
+	//	alGetSourcei(source, AL_BUFFERS_PROCESSED,&state);
 	//checkError();
 	return state;
 }
