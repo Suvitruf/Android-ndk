@@ -23,7 +23,7 @@ public:
 
 	virtual void setVolume(float volume);
 	virtual float getVolume();
-	void setLooping(bool looping);
+//	void setLooping(bool looping);
 
 	virtual void play();
 	virtual void pause();

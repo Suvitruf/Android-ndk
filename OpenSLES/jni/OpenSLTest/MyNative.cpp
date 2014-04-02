@@ -30,12 +30,12 @@ JNIEXPORT void JNICALL Java_ru_suvitruf_opensles_MainActivity_loadAudio(JNIEnv *
 
 	context = new OSLContext(mgr);
 	sound1 = new OSLWav(context);
-	sound1->load("SnowflakePickUpV_2.wav");
+	sound1->load("industrial_suspense1.wav");
 	sound1->setVolume(1.0F);
 
 	sound2 = new OSLWav(context);
-	sound2->load("SnowFlakePickUPV_4.wav");
-//	sound2->setLoop(true);
+	sound2->load("industrial_suspense1.wav");
+	sound2->setLoop(true);
 	sound2->setVolume(1.0F);
 }
 
@@ -49,7 +49,7 @@ JNIEXPORT void JNICALL Java_ru_suvitruf_opensles_MainActivity_play(JNIEnv *pEnv,
 		sound1->play();
 }
 JNIEXPORT void JNICALL Java_ru_suvitruf_opensles_MainActivity_play2(JNIEnv *pEnv, jobject pThis){
-	LOGD("hm?");
+//	LOGD("hm?");
 	if(sound2->isPlaying())
 			sound2->stop();
 		else

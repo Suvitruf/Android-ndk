@@ -69,7 +69,7 @@ void OSLAssetPlayer::init(char * filename){
 	assert(SL_RESULT_SUCCESS == result);
 
 	// enable whole file looping
-	result = (*fdPlayerSeek)->SetLoop(fdPlayerSeek, SL_BOOLEAN_TRUE, 0, SL_TIME_UNKNOWN);
+	result = (*fdPlayerSeek)->SetLoop(fdPlayerSeek, sound->isLooping() ? SL_BOOLEAN_TRUE : SL_BOOLEAN_FALSE, 0, SL_TIME_UNKNOWN);
 	assert(SL_RESULT_SUCCESS == result);
 
 //	return JNI_TRUE;

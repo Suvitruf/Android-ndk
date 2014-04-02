@@ -43,10 +43,10 @@ void OSLSound::setOffset(float offset){
 
 
 
-void OSLSound::setLooping(bool aBool){
+//void OSLSound::setLooping(bool aBool){
 //	alSourcei(source, AL_LOOPING, aBool ? AL_TRUE : AL_FALSE);
 	//checkError();
-}
+//}
 void OSLSound::setVolumePlayer(){
 	if(player != NULL)
 		if(player->sound != NULL && player->sound == this)

@@ -14,15 +14,15 @@ public class MainActivity extends Activity implements NativeCalls  {
 	static {
 		System.loadLibrary("OpenSL");  
 	} 
-	
-	//загрузка ресурсов
+	 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	native public void loadAudio(NativeCalls nativeCallListener, AssetManager mng);
-	//очистка
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	native public void destroyObjects();
-	//играем WAV
+	//пїЅпїЅпїЅпїЅпїЅпїЅ WAV
 	native public void play();
 	native public void play2();
-	//отобразить количество прочитаных байт
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	
 	@Override 
 	public void sendLog(String result){
