@@ -74,7 +74,7 @@ private:
 
 	char*  buf ;
 
-	void createBufferQueuePlayer();
+//	void createBufferQueuePlayer();
 
 
 //	SLInterfaceID pIDs[1];

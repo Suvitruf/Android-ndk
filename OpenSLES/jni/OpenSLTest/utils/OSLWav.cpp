@@ -8,7 +8,7 @@
 OSLWav::OSLWav(OSLContext * context):OSLSound(context){
 
 }
-OSLWav::OSLWav( OSLContext * context, char * path):OSLSound(context, path){
+OSLWav::OSLWav( OSLContext * context, char * path):OSLSound(context){
 	load(path);
 }
 OSLWav::~OSLWav(){
@@ -176,7 +176,7 @@ void OSLWav::load(char* filename) {
 	strcpy(this->filename, filename);
 //	this->filename = filename;
 	buf = readWAVFull(mgr, &header);
-//	this->LogHeaders();
+	this->LogHeaders();
 	dataSize = header.dataSize;
 //	LOGD("file = %s",filename);
 
@@ -204,7 +204,7 @@ void OSLWav::load(char* filename) {
 //	(*bufferQueue)->Enqueue(bufferQueue, buf, header.dataSize);
 //}
 
-void OSLWav::createBufferQueuePlayer(){
+//void OSLWav::createBufferQueuePlayer(){
 //	 SLresult result;
 //
 //	// configure audio source
@@ -238,7 +238,7 @@ void OSLWav::createBufferQueuePlayer(){
 //	result = (*player)->SetPlayState(player, SL_PLAYSTATE_PLAYING);
 //
 //	return result;
-}
+//}
 char * OSLWav::getBuffer(){
 	return buf;
 }

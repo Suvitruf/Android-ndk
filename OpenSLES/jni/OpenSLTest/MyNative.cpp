@@ -9,6 +9,7 @@
 #include "OSLContext.h"
 #include "OSLSound.h"
 #include "OSLWav.h"
+#include "OSLMp3.h"
 //struct timeval currentTime;
 //struct timeval oldTime;
 
@@ -30,12 +31,12 @@ JNIEXPORT void JNICALL Java_ru_suvitruf_opensles_MainActivity_loadAudio(JNIEnv *
 
 	context = new OSLContext(mgr);
 	sound1 = new OSLWav(context);
-	sound1->load("industrial_suspense1.wav");
+	sound1->load("ваш_файл.wav");
 	sound1->setVolume(1.0F);
 
-	sound2 = new OSLWav(context);
-	sound2->load("industrial_suspense1.wav");
-	sound2->setLoop(true);
+	sound2 = new OSLMp3(context);
+	sound2->load("ваш_файл.mp3");
+//	sound2->setLoop(true);
 	sound2->setVolume(1.0F);
 }
 

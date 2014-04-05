@@ -1,5 +1,4 @@
 #include "OSLContext.h"
-#include "stddef.h"
 #include <OSLAssetPlayer.h>
 #include <OSLBufferPlayer.h>
 
@@ -7,16 +6,7 @@ OSLContext::OSLContext(AAssetManager *mgr){
 	LOGD("oslContext");
 	this->mgr = mgr;
 	SLresult result;
-//	pIDs[1] = {SL_IID_ENGINE};
-//	pIDsRequired[1]  = {SL_BOOLEAN_TRUE};
-//	result = slCreateEngine(
-//	    &engineObj, /*Указатель на результирующий объект*/
-//	    0, /*Количество элементов в массиве дополнительных опций*/
-//	    NULL, /*Массив дополнительных опций, NULL, если они Вам не нужны*/
-//	    lEngineMixIIDCount, /*Количество интерфесов, которые должен будет поддерживать создаваемый объект*/
-//	    pIDs, /*Массив ID интерфейсов*/
-//	pIDsRequired /*Массив флагов, указывающих, необходим ли соответствующий интерфейс. Если указано SL_TRUE, а интерфейс не поддерживается, вызов завершится неудачей, с кодом возврата SL_RESULT_FEATURE_UNSUPPORTED*/
-//	);
+
 	const SLuint32 lEngineMixIIDCount = 1;
 	const SLInterfaceID lEngineMixIIDs[] = {SL_IID_ENGINE};
 	const SLboolean lEngineMixReqs[] = {SL_BOOLEAN_TRUE};
@@ -24,10 +14,13 @@ OSLContext::OSLContext(AAssetManager *mgr){
 	const SLInterfaceID lOutputMixIIDs[] = {};
 	const SLboolean lOutputMixReqs[] = { };
 
-	result = slCreateEngine(&engineObj, 0, NULL, lEngineMixIIDCount,
-			lEngineMixIIDs, lEngineMixReqs);
+	result = slCreateEngine(&engineObj, //pointer to object
+			0, // count of elements is array of additional options
+			NULL, // array of additional options
+			lEngineMixIIDCount, // interface count
+			lEngineMixIIDs, // array of interface ids
+			lEngineMixReqs);
 
-	/*Проверяем результат. Если вызов slCreateEngine завершился неуспехом – ничего не поделаешь*/
 	if (result != SL_RESULT_SUCCESS ) {
 		LOGE("Error after slCreateEngine");
 		return;
@@ -138,29 +131,21 @@ void OSLContext::pause(){
 	}
 }
 OSLPlayer * OSLContext::getFreePlayer(OSLSound * sound){
-//	LOGD("getFreePlayer");
+	// if need looping sound, use AssetPlayer, 'cause BufferPlayer doesn't allow Seek Interface
 	if(sound->isLooping()){
-		for(int i = 0; i< MAX_ASSET_PLAYERS_COUNT; ++i){
-			if(!assetPlayers[i]->isPlaying()){
-//				LOGD("getAssetPlayer = %i", i);
-
+		for(int i = 0; i< MAX_ASSET_PLAYERS_COUNT; ++i)
+			if(!assetPlayers[i]->isPlaying())
 				return assetPlayers[i];
-			}
-		}
+
+
 		return assetPlayers[0];
 	}
 	else{
-		for(int i = 0; i< MAX_BUF_PLAYERS_COUNT; ++i){
-
-			if(!bufPlayers[i]->isPlaying()){
-//				LOGD("getBufPlayer = %i", i);
-
+		for(int i = 0; i< MAX_BUF_PLAYERS_COUNT; ++i)
+			if(!bufPlayers[i]->isPlaying())
 				return bufPlayers[i];
-			}
 
-		}
 		return bufPlayers[0];
 
 	}
-//	return players[0];
 }

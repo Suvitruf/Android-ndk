@@ -16,10 +16,11 @@ OSLSound::OSLSound( OSLContext * context){
 	volume = 1;
 	loop = false;
 }
-OSLSound::OSLSound( OSLContext * context, char * path){
-	this->context = context;
-	this->mgr = context->mgr;
-}
+//OSLSound::OSLSound( OSLContext * context, char * path){
+//	this->context = context;
+//	this->mgr = context->mgr;
+//
+//}
 //OSLSound::~OSLSound()
 //{
 //
@@ -99,9 +100,9 @@ void OSLSound::play(){
 
 
 	player = context->getFreePlayer(this);
-//	LOGD("set %s",filename);
+	LOGD("set %s",filename);
 
-//	LOGD("play2");
+
 	if(	player == NULL){
 //		LOGD("	player is null");
 		return;

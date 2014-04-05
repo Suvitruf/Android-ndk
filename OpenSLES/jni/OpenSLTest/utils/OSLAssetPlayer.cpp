@@ -14,12 +14,10 @@ void OSLAssetPlayer::clear(){
 	fdPlayerMuteSolo = NULL;
 }
 void OSLAssetPlayer::init(char * filename){
-//	LOGD("init");
+
 	SLresult result;
-//	LOGD("file = %s",filename);
+
 	AAsset* asset = AAssetManager_open(mgr, filename, AASSET_MODE_UNKNOWN);
-
-
 
 	// the asset might not be found
 //	if (NULL == asset) {
@@ -36,18 +34,18 @@ void OSLAssetPlayer::init(char * filename){
 	SLDataLocator_AndroidFD loc_fd = {SL_DATALOCATOR_ANDROIDFD, fd, start, length};
 	SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
 	SLDataSource audioSrc = {&loc_fd, &format_mime};
-//	LOGD("1");
+
 	// configure audio sink
 	SLDataLocator_OutputMix loc_outmix = {SL_DATALOCATOR_OUTPUTMIX,  context->getOutputMixObject()};
 	SLDataSink audioSnk = {&loc_outmix, NULL};
-//	LOGD("2");
+
 	// create audio player
 	const SLInterfaceID ids[3] = {SL_IID_SEEK, SL_IID_MUTESOLO, SL_IID_VOLUME};
 	const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
 	result = (*context->getEngine())->CreateAudioPlayer(context->getEngine(), &playerObj, &audioSrc, &audioSnk,
 			3, ids, req);
 	assert(SL_RESULT_SUCCESS == result);
-//	LOGD("3");
+
 	// realize the player
 	result = (*playerObj)->Realize(playerObj, SL_BOOLEAN_FALSE);
 	assert(SL_RESULT_SUCCESS == result);
@@ -76,21 +74,14 @@ void OSLAssetPlayer::init(char * filename){
 }
 
 void OSLAssetPlayer::setSound(OSLSound * sound){
-//	LOGD(" OSLAssetPlayer::setSound");
-//	this->fileName = sound->filename;
-//	LOGD("1");
-//	clearLastSoundIfNeeded(sound);
-//	LOGD("2");
+
 	this->sound = sound;
-//	LOGD("3");
 	clear();
 	OSLPlayer::clear();
 	init(sound->filename);
-//	LOGD("4");
 }
 
 void OSLAssetPlayer::pause(){
-//		LOGD("pause %s",this->fileName);
 	if( player == NULL) return;
 	SLresult result;
 
@@ -99,15 +90,12 @@ void OSLAssetPlayer::pause(){
 }
 void OSLAssetPlayer::play(){
 
-
-//		LOGD("play %s",this->fileName);
 	if( player == NULL) return;
 	SLresult result;
 	result=  (*player)->SetPlayState(player, SL_PLAYSTATE_PLAYING);
 	assert(SL_RESULT_SUCCESS == result);
 }
 void OSLAssetPlayer::stop(){
-//	LOGD("stop %s",this->fileName);
 	if( player == NULL) return;
 	SLresult result;
 	result=  (*player)->SetPlayState(player, SL_PLAYSTATE_STOPPED);

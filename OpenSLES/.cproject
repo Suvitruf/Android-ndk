@@ -3,7 +3,9 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="com.android.toolchain.gcc.874199429">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.android.toolchain.gcc.874199429" moduleId="org.eclipse.cdt.core.settings" name="Default">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting/>
+				</externalSettings>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.errorparsers.xlc.XlcErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -29,6 +31,13 @@
 								</outputEntries>
 							</builder>
 							<tool id="com.android.gcc.compiler.691122447" name="Android GCC Compiler" superClass="com.android.gcc.compiler">
+								<option id="com.android.gcc.option.includePath.1677467790" superClass="com.android.gcc.option.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\sources\cxx-stl\stlport\stlport&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\sources\cxx-stl\gabi++\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\platforms\android-9\arch-arm\usr\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\toolchains\arm-linux-androideabi-4.6\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.6\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\toolchains\arm-linux-androideabi-4.6\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.6\include-fixed&quot;"/>
+								</option>
 								<inputType id="com.android.gcc.inputType.963443138" superClass="com.android.gcc.inputType"/>
 							</tool>
 						</toolChain>
@@ -52,5 +61,9 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/OpenSLES"/>
+		</configuration>
+	</storageModule>
 </cproject>

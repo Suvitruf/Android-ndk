@@ -19,7 +19,7 @@ public:
 
 	virtual ~OSLSound();
 	OSLSound( OSLContext * context);
-	OSLSound( OSLContext * context, char * path);
+//	OSLSound( OSLContext * context, char * path);
 
 	virtual void setVolume(float volume);
 	virtual float getVolume();

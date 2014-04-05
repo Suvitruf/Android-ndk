@@ -65,16 +65,13 @@ OSLBufferPlayer::~OSLBufferPlayer(){
 //}
 
 void OSLBufferPlayer::init(){
-
-
-//	LOGD("1");
 	SLresult result;
-	/*Данные, которые необходимо передать в CreateAudioPlayer() для создания буферизованного плеера */
-//	locatorBufferQueue = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 1}; /*Один буфер в очереди*/
+
+//	locatorBufferQueue = {SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE, 1}; /*пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 	SLDataLocator_AndroidSimpleBufferQueue locatorBufferQueue;
 	locatorBufferQueue.locatorType = SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE;
 	locatorBufferQueue.numBuffers = 16;
-	/*Информация, которую можно взять из заголовка wav*/
+
 //	formatPCM = {
 //		SL_DATAFORMAT_PCM, 1, SL_SAMPLINGRATE_22_05,
 //		SL_PCMSAMPLEFORMAT_FIXED_16, SL_PCMSAMPLEFORMAT_FIXED_16,
@@ -89,7 +86,7 @@ void OSLBufferPlayer::init(){
 	formatPCM.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;// header.fmtSize;
 	formatPCM.channelMask = SL_SPEAKER_FRONT_LEFT|SL_SPEAKER_FRONT_RIGHT ;
 	formatPCM.endianness = SL_BYTEORDER_LITTLEENDIAN;
-//	LOGD("2");
+
 //	audioSrc = {&locatorBufferQueue, &formatPCM};
 	audioSrc.pLocator = &locatorBufferQueue;
 	audioSrc.pFormat = &formatPCM;
@@ -107,13 +104,12 @@ void OSLBufferPlayer::init(){
 			/*SL_IID_EFFECTSEND,SL_IID_SEEK,*/
 			/*SL_IID_MUTESOLO,*/ SL_IID_VOLUME};
 	const SLboolean req[2] = {SL_BOOLEAN_TRUE,SL_BOOLEAN_TRUE};
-//	LOGD("2");
-	/*Создаем плеер*/
+
 	result = (*context->getEngine())->CreateAudioPlayer(context->getEngine(),
 			&playerObj, &audioSrc, &audioSnk,2, ids, req);
 
 	assert(SL_RESULT_SUCCESS == result);
-//    (*playerObj)->s
+
 	result = (*playerObj)->Realize(playerObj, SL_BOOLEAN_FALSE );
 	assert(SL_RESULT_SUCCESS == result);
 	if (result != SL_RESULT_SUCCESS ) {
@@ -182,24 +178,20 @@ void OSLBufferPlayer::pause(){
 	assert(SL_RESULT_SUCCESS == result);
 }
 //void OSLBufferPlayer::setBuffer(char * buf, long dataSize){
-//	(*bufferQueue)->Clear(bufferQueue); /*Очищаем очередь на случай, если там что-то было. Можно опустить, если хочется, чтобы очередь реально была очередью*/
+//	(*bufferQueue)->Clear(bufferQueue);
 //	(*bufferQueue)->Enqueue(bufferQueue, buf, dataSize);
 //}
 void OSLBufferPlayer::setSound(OSLSound * sound){
-//	LOGD("setSound1 buffer");
-//	lastSound = sound;
-	if(bufferQueue == NULL){
+
+	if(bufferQueue == NULL)
 		LOGD("bufferQueue is null");
-	}
-//	clearLastSoundIfNeeded(sound);
-//	LOGD("1");
+
+
 	this->sound = sound;
-//	LOGD("2");
-	(*bufferQueue)->Clear(bufferQueue); /*Очищаем очередь на случай, если там что-то было. Можно опустить, если хочется, чтобы очередь реально была очередью*/
-//	LOGD("setSound2 buffer");
+
+	(*bufferQueue)->Clear(bufferQueue);
 	(*bufferQueue)->Enqueue(bufferQueue, sound->getBuffer() , sound->getSize());
-//	LOGD("3");
-//	LOGD("setSound3 buffer");
+
 }
 //void OSLBufferPlayer::replaySound(){
 //
@@ -211,7 +203,7 @@ void OSLBufferPlayer::setSound(OSLSound * sound){
 //			LOGD("buf null");
 //		if(bufferQueue == NULL)
 //			LOGD("bufferQueue null");
-//		//(*bufferQueue)->Clear(bufferQueue); /*Очищаем очередь на случай, если там что-то было. Можно опустить, если хочется, чтобы очередь реально была очередью*/
+//		//(*bufferQueue)->Clear(bufferQueue); /*пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ*/
 //		(*bufferQueue)->Enqueue(bufferQueue, lastSound->getBuffer() , lastSound->getSize());
 //		LOGD("3 %s size %i",lastSound->filename, lastSound->getSize());
 //		play();
