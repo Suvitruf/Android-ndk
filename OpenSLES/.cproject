@@ -35,8 +35,8 @@
 									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\sources\cxx-stl\stlport\stlport&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\sources\cxx-stl\gabi++\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\platforms\android-9\arch-arm\usr\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\toolchains\arm-linux-androideabi-4.6\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.6\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\toolchains\arm-linux-androideabi-4.6\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.6\include-fixed&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;G:\Programs\Install\Android\android-ndk-r8d\toolchains\arm-linux-androideabi-4.6\prebuilt\windows\lib\gcc\arm-linux-androideabi\4.6\include&quot;"/>
 								</option>
 								<inputType id="com.android.gcc.inputType.963443138" superClass="com.android.gcc.inputType"/>
 							</tool>

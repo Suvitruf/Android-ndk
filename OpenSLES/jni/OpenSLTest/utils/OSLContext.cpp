@@ -131,8 +131,8 @@ void OSLContext::pause(){
 	}
 }
 OSLPlayer * OSLContext::getFreePlayer(OSLSound * sound){
-	// if need looping sound, use AssetPlayer, 'cause BufferPlayer doesn't allow Seek Interface
-	if(sound->isLooping()){
+
+	if(sound->getPlayerType() == OSLSound::AASSET){
 		for(int i = 0; i< MAX_ASSET_PLAYERS_COUNT; ++i)
 			if(!assetPlayers[i]->isPlaying())
 				return assetPlayers[i];

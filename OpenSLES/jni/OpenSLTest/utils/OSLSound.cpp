@@ -9,12 +9,14 @@
 OSLSound::~OSLSound(){
 
 }
-OSLSound::OSLSound( OSLContext * context){
+OSLSound::OSLSound( OSLContext * context, PlayerType playerType){
 	this->context = context;
 	this->mgr = context->mgr;
 	player = NULL;
 	volume = 1;
 	loop = false;
+	this->playerType = playerType;
+	LOGD("	this->playerType = %i",	this->playerType);
 }
 //OSLSound::OSLSound( OSLContext * context, char * path){
 //	this->context = context;

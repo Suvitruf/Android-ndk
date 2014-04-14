@@ -49,8 +49,8 @@ public:
 //	OSLWav(OSLContext context);
 //	float getVolume();
 //	void setVolume(float volume);
-	OSLWav( OSLContext * context);
-	OSLWav( OSLContext * context, char * path);
+	OSLWav( OSLContext * context,PlayerType playerType);
+	OSLWav( OSLContext * context,PlayerType playerType, char * path);
 	~OSLWav();
 	void load( char* filename);
 //	void pause();

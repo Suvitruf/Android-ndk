@@ -14,11 +14,14 @@ class OSLSound
 
 
 public:
+	enum PlayerType {BUFFER, AASSET};
+
+	PlayerType playerType;
 	char filename[64];
 	virtual void load(char * path) = 0;
 
 	virtual ~OSLSound();
-	OSLSound( OSLContext * context);
+	OSLSound( OSLContext * context, PlayerType playerType);
 //	OSLSound( OSLContext * context, char * path);
 
 	virtual void setVolume(float volume);
@@ -44,6 +47,8 @@ public:
     bool isLooping();
     virtual long getSize() { return 0; }
     virtual char * getBuffer() { return 0; }
+
+    PlayerType getPlayerType(){ return playerType; }
 //    void clearPlayer();
 protected:
     bool loop;
