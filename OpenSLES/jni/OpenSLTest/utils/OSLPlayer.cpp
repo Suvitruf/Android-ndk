@@ -57,18 +57,18 @@ SLuint32  OSLPlayer::state(){
 //		LOGD("NULL sound");
 //}
 //float gain_to_attenuation( float gain ){
-//    return 1000.0f * 20.0f * log10((double)gain);
+//    return 100.0f * 20.0f * log10((double)gain);
 //}
 SLmillibel OSLPlayer::gain_to_attenuation(float gain) {
 
-//	float v = 1000.0f * 20.0f * log10((double) gain);
+//	float v = 100.0f * 20.0f * log10((double) gain);
 	SLmillibel volume_mb;
 	if (gain >= 3.0f)
 		(*fdPlayerVolume)->GetMaxVolumeLevel(fdPlayerVolume, &volume_mb);
 	else if (gain <= 0.02f)
 		volume_mb = SL_MILLIBEL_MIN;
 	else {
-		volume_mb = M_LN2 / log(3.0f / (3.0f - gain)) * -1000.0f;
+		volume_mb = 20.0f * 100.0f * log10f(val);
 		if (volume_mb > 0)
 			volume_mb = SL_MILLIBEL_MIN;
 	}
@@ -76,7 +76,7 @@ SLmillibel OSLPlayer::gain_to_attenuation(float gain) {
 	return volume_mb;
 }
 float from_attenuation( float gain ){
-    return pow(10, gain/ (1000.0f * 20.0f ));
+    return pow(10, gain/ (100.0f * 20.0f ));
 }
 void OSLPlayer::setVolume(float volume){
 //	LOGD("hm %f", volume);
